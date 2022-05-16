@@ -1,5 +1,3 @@
-package PSO;
-
 import java.util.Scanner;
 
 public class Main {
@@ -104,18 +102,20 @@ public class Main {
     private static void printMenu () {
         System.out.println("----------------------------MENU----------------------------");
         System.out.println("Select a function:");
-        System.out.println("1. (x^4)-2(x^3)");
-        System.out.println("2. Ackley's Function");
+        System.out.println("1. Funkcja lab1");
+        System.out.println("2. Funkcja lab2");
         System.out.println("3. Booth's Function");
         System.out.println("4. Three Hump Camel Function");
+        System.out.println("5. RosenBrock");
         System.out.print("Function:  ");
     }
 
     private static Particle.FunctionType getFunction (int input) {
         if (input == 1)         return Particle.FunctionType.FunctionA;
-        else if (input == 2)    return Particle.FunctionType.Ackleys;
-        else if (input == 3)    return Particle.FunctionType.Booths;
+        else if (input == 2)    return Particle.FunctionType.FunctionB;
+        else if (input == 3)    return Particle.FunctionType.FunctionB1;
         else if (input == 4)    return Particle.FunctionType.ThreeHumpCamel;
+        else if (input == 5)    return Particle.FunctionType.RosenBrock;
         System.out.println("Invalid Input.");
         return null;
     }

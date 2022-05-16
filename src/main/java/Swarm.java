@@ -1,10 +1,10 @@
-package PSO;
-
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.util.Random;
 
-import PSO.Particle.FunctionType;
 
-/**
+
+/**`
  * Represents a swarm of particles from the Particle Swarm Optimization algorithm.
  */
 public class Swarm {
@@ -13,10 +13,11 @@ public class Swarm {
     private double inertia, cognitiveComponent, socialComponent;
     private Vector bestPosition;
     private double bestEval;
-    private FunctionType function; // The function to search.
+    private Particle.FunctionType function; // The function to search.
     public static final double DEFAULT_INERTIA = 0.729844;
-    public static final double DEFAULT_COGNITIVE = 1.496180; // Cognitive component.
-    public static final double DEFAULT_SOCIAL = 1.496180; // Social component.
+    public static final double DEFAULT_COGNITIVE = 1.496180; // Cognitive component. == Social component
+    public static final double DEFAULT_SOCIAL = 1.496180; // Social component. 1,496180
+    int vectorLength;
 
     /**
      * When Particles are created they are given a random position.
@@ -33,7 +34,7 @@ public class Swarm {
      * @param particles     the number of particles to create
      * @param epochs        the number of generations
      */
-    public Swarm (FunctionType function, int particles, int epochs) {
+    public Swarm (Particle.FunctionType function, int particles, int epochs) {
         this(function, particles, epochs, DEFAULT_INERTIA, DEFAULT_COGNITIVE, DEFAULT_SOCIAL);
     }
 
@@ -45,7 +46,7 @@ public class Swarm {
      * @param cognitive     the cognitive component or introversion of the particle
      * @param social        the social component or extroversion of the particle
      */
-    public Swarm (FunctionType function, int particles, int epochs, double inertia, double cognitive, double social) {
+    public Swarm (Particle.FunctionType function, int particles, int epochs, double inertia, double cognitive, double social) {
         this.numOfParticles = particles;
         this.epochs = epochs;
         this.inertia = inertia;
@@ -53,10 +54,11 @@ public class Swarm {
         this.socialComponent = social;
         this.function = function;
         double infinity = Double.POSITIVE_INFINITY;
-        bestPosition = new Vector(infinity, infinity, infinity);
+        bestPosition = new Vector(new double[]{infinity,infinity,infinity,infinity,infinity,infinity,infinity,infinity,infinity,infinity,infinity,infinity,infinity,infinity,infinity});
         bestEval = Double.POSITIVE_INFINITY;
         beginRange = DEFAULT_BEGIN_RANGE;
         endRange = DEFAULT_END_RANGE;
+        vectorLength = Particle.getVectorLenght(function);
     }
 
     /**
@@ -64,16 +66,28 @@ public class Swarm {
      */
     public void run () {
         Particle[] particles = initialize();
+        //DLA KAŻDEGO PUNKTU ITERUJEMY PO WSZYSTKICH DANYCH W EXCELU DLA WSZYSTKICH PUNKTÓW Z KAŻDĄ INDYWIDUALNĄ TEMPERATURĄ,
+        //TRZEBA DODAĆ INDYWIDDUALNE TWORZENIE FUNKCJI I TA FUNKCJA BĘDZIE ITEROWAĆ PO WARTOŚCIACH TAKIE JAKIE SĄ W EXCELU, A DO NIEJ
+        // BĘDĄ DODAWANE TYLKO PARAMETRY A
 
         double oldEval = bestEval;
         System.out.println("--------------------------EXECUTING-------------------------");
         System.out.println("Global Best Evaluation (Epoch " + 0 + "):\t"  + bestEval);
 
-        for (int i = 0; i < epochs; i++) {
+        /*try{
+            // Create file
+            FileWriter fstream = new FileWriter("out.txt");
+            BufferedWriter out = new BufferedWriter(fstream);
+            //Close the output stream
+*/
+        //for (int i = 0; i < epochs; i++) {
+        int i = 0;
+        while(bestEval > 0.000000001){
 
             if (bestEval < oldEval) {
-                System.out.println("Global Best Evaluation (Epoch " + (i + 1) + "):\t" + bestEval);
+                System.out.print("Best" + (i + 1) + "):\t" + bestEval + "Vec: " + bestPosition.toString());
                 oldEval = bestEval;
+               // out.write(String.valueOf(bestEval) + " \n");
             }
 
             for (Particle p : particles) {
@@ -85,15 +99,23 @@ public class Swarm {
                 updateVelocity(p);
                 p.updatePosition();
             }
+
+            //System.out.println("   Epoch No: " + i + " | CURRENT ERROR: " + oldEval + "  BEST ERROR: " + bestEval + " |");
+            System.out.println("   Epoch No: " + i + "= " + bestEval);
+            i++;
+            //if(bestEval < 0.0001) break;
+
         }
 
         System.out.println("---------------------------RESULT---------------------------");
-        System.out.println("x = " + bestPosition.getX());
-        if (function != FunctionType.FunctionA) {
-            System.out.println("y = " + bestPosition.getY());
-        }
+        System.out.println("a = " + bestPosition.toString());
         System.out.println("Final Best Evaluation: " + bestEval);
         System.out.println("---------------------------COMPLETE-------------------------");
+
+      /*  out.close();
+        }catch (Exception e){//Catch exception if any
+            System.err.println("Error: " + e.getMessage());
+        } */
 
     }
 
@@ -104,7 +126,7 @@ public class Swarm {
     private Particle[] initialize () {
         Particle[] particles = new Particle[numOfParticles];
         for (int i = 0; i < numOfParticles; i++) {
-            Particle particle = new Particle(function, beginRange, endRange);
+            Particle particle = new Particle(function, beginRange, endRange,vectorLength);
             particles[i] = particle;
             updateGlobalBest(particle);
         }
