@@ -105,7 +105,7 @@ public class Main {
         System.out.println("1. Funkcja lab1");
         System.out.println("2. Funkcja lab2");
         System.out.println("3. Booth's Function");
-        System.out.println("4. Three Hump Camel Function");
+        System.out.println("4. Funkcja lab5");
         System.out.println("5. RosenBrock");
         System.out.print("Function:  ");
     }
@@ -114,7 +114,7 @@ public class Main {
         if (input == 1)         return Particle.FunctionType.FunctionA;
         else if (input == 2)    return Particle.FunctionType.FunctionB;
         else if (input == 3)    return Particle.FunctionType.FunctionB1;
-        else if (input == 4)    return Particle.FunctionType.ThreeHumpCamel;
+        else if (input == 4)    return Particle.FunctionType.FunctionC;
         else if (input == 5)    return Particle.FunctionType.RosenBrock;
         System.out.println("Invalid Input.");
         return null;

@@ -25,7 +25,7 @@ public class DifferentialEq {
         } else {
             //Rozwiązywanie metodą Eulera drugiego równania
             double t = 0.1;  //Czas rozwiązywania
-            double delta_h = 0.0001;
+            double delta_h = 0.0001; // przypisanie czasu prowadzenia pomiaru
             double a[] = {2.1E-3,176.0,19.5E3,0.000148*3E10,151E3,0.973,5.77,1.0,0.0,0.262,0.0E13,0.000605E13,0.167};
             double p[] = new double[(int)(t/delta_h)+2];
             double e_dot = 10;
@@ -44,20 +44,40 @@ public class DifferentialEq {
                     p[j + 1] = p[j] + delta_h * functionA(p[j], e_dot, i, p, j, delta_h,Q,T,a,t_cr);
                 j++;
             }
-
             j = 0;
             for (double i = 0; i < t; i = i + delta_h) {
                 p[j + 1] = p[j] + delta_h * functionA(p[j], e_dot, i, p, j, delta_h,Q,T,a,t_cr);
                 System.out.println(p[j]);
                 j++;
-
             }
             System.out.println(t_cr);
         }
 
-
     }
 
+    static double[] Euler(double czas_pomiaru, double delta_h, double[] a,double e_dot, double T, double Q,double t){
+        int j = 0;
+        double[] p = new double[(int) (czas_pomiaru/delta_h)];
+        double t_cr = czas_pomiaru; //czas równy czasowi prowadzenia obliczeń.
+        double ro_cr = -a[10]+a[11]*Math.pow(ZenerHollomon(e_dot,Q,T,R),a[9]);
+        for (double i = 0; i < t; i = i + delta_h) {
+            if(p[j] >= ro_cr) {
+                t_cr = i;
+                break;
+            }
+            p[j + 1] = p[j] + delta_h * functionA(p[j], e_dot, i, p, j, delta_h,Q,T,a,t_cr);
+            j++;
+        }
+        j = 0;
+        for (double i = 0; i < t; i = i + delta_h) {
+            p[j + 1] = p[j] + delta_h * functionA(p[j], e_dot, i, p, j, delta_h,Q,T,a,t_cr);
+            System.out.println(p[j]);
+            j++;
+        }
+
+
+        return p;
+    }
 
     static double ZenerHollomon(double epsilon_dot, double Q, double R, double T){
         double Z = epsilon_dot*Math.exp((Q)/(R*T));
@@ -140,8 +160,13 @@ public class DifferentialEq {
         p_prim = A1*epsilon_dot-A2*p0*epsilon_dot-A3*Math.pow(p0,a[7])*part_1;
 
         return p_prim;
+
+
+
+
     }
 }
 
 
-// metoda eulera będzie obliczała funkcję różniczkową <- klasa z interfejsem function
+// metoda eulera będzie obliczała funkcję różniczkową
+//zwraca tablice z eulera -> oblicza wartość błędów w każdym kroku

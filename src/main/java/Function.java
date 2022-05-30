@@ -181,13 +181,19 @@ class Function {
     static double functionC(double a[]){
         ObjectProperties[] dataModel = ExcelReader.getObjectPropertiesExcel("C:\\Users\\LENOVO\\Desktop\\Wimip\\identyfikacja_modeli\\dane\\Dane_lab5.xlsx");
         double totalError = 0;
+        double Q = 312000;
+        double p_0 = 10000;
+
         for (ObjectProperties data:
                 dataModel) {
-            for (int i = 0 ; i < data.sigma.length; i++){
-                totalError += Math.pow((data.sigma[i] - funkcja(data.epsilon[i], data.dot_epsilon, data.temperature,a))/(data.sigma[i]+0.0001),2);
+            double[] obliczone = DifferentialEq.Euler(data.epsilon[100001],data.epsilon[1],a,data.dot_epsilon,data.temperature + 273,Q,data.epsilon[100001]);
+            for (int i = 0 ; i < obliczone.length; i++){
+                totalError += Math.pow((data.sigma[i] - obliczone[i])/(data.sigma[i]+0.0001),2);
                 //System.out.println(funkcja(data.epsilon[i], data.dot_epsilon, data.temperature,a));
             }
+            totalError = totalError/(data.sigma.length);
         }
+        totalError = totalError/(dataModel.length);
         return totalError;
     }
 /*

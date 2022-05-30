@@ -19,7 +19,7 @@ public class ExcelReader
             File file = new File(path);   //creating a new file instance
             FileInputStream fis = new FileInputStream(file);   //obtaining bytes from the file
             //creating Workbook instance that refers to .xlsx file
-            XSSFWorkbook wb = new XSSFWorkbook(fis);
+            XSSFWorkbook wb = new XSSFWorkbook(file);
             tableOfObjectProperties = new ObjectProperties[wb.getNumberOfSheets()];
               //iterating over excel file
             int numberOfSheet = 0;

@@ -39,6 +39,8 @@ class Particle {
             return Function.functionB(position.getCordinates());
         } else if (function == FunctionType.FunctionB1) {
             return Function.functionB1(position.getCordinates());
+        } else if (function == FunctionType.FunctionC) {
+            return Function.functionC(position.getCordinates());
         } else
             return 0;
 
@@ -80,6 +82,20 @@ class Particle {
             a[0] = rand(1E+12, 1E+14);
             a[1] = rand(3.0, 6.0);
             a[2] = rand(1E-4, 0.1);
+        }else if (function == FunctionType.FunctionC){
+            a[0] = rand(0E-3, 10E-3);
+            a[1] = rand(10, 25000);
+            a[2] = rand(1E3, 100E3);
+            a[3] = rand(0,0.1);
+            a[4] = rand(10E3,500E3);
+            a[5] = rand(0.1,1);
+            a[6] = rand(1,10);
+            a[7] = rand(0,10);
+            a[8] = rand(0,10);
+            a[9] = rand(0,1);
+            a[10] = rand(0E13,1E13);
+            a[11] = rand(0E13,0.1E13 );
+            a[12] = rand(0, 1);
         }else{ for(int i = 0; i < a.length ; i++){
             a[i] = rand(0,100);
         }
@@ -169,6 +185,7 @@ class Particle {
         FunctionA,
         FunctionB,
         FunctionB1,
+        FunctionC,
         Ackleys,
         Booths,
         ThreeHumpCamel,
@@ -182,7 +199,9 @@ class Particle {
             return 15;
         }else if (funkcja == FunctionType.FunctionB1){
             return 3;
-        }else return 2;
+        }else if (funkcja == FunctionType.FunctionC){
+            return 13;
+        } else return 2;
     }
 
 }
