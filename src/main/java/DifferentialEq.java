@@ -57,10 +57,10 @@ public class DifferentialEq {
 
     static double[] Euler(double czas_pomiaru, double delta_h, double[] a,double e_dot, double T, double Q,double t){
         int j = 0;
-        double[] p = new double[(int) (czas_pomiaru/delta_h)];
+        double[] p = new double[100002];  // (int) (czas_pomiaru/delta_h)+2
         double t_cr = czas_pomiaru; //czas równy czasowi prowadzenia obliczeń.
         double ro_cr = -a[10]+a[11]*Math.pow(ZenerHollomon(e_dot,Q,T,R),a[9]);
-        for (double i = 0; i < t; i = i + delta_h) {
+        for (double i = 0; i < czas_pomiaru; i = i + delta_h) {
             if(p[j] >= ro_cr) {
                 t_cr = i;
                 break;
@@ -69,9 +69,10 @@ public class DifferentialEq {
             j++;
         }
         j = 0;
-        for (double i = 0; i < t; i = i + delta_h) {
+        double i = 0;
+        for (double g = 0; g < 100000; g++) {
             p[j + 1] = p[j] + delta_h * functionA(p[j], e_dot, i, p, j, delta_h,Q,T,a,t_cr);
-            System.out.println(p[j]);
+            i = i + delta_h;
             j++;
         }
 
@@ -108,6 +109,11 @@ public class DifferentialEq {
 
 
     static double functionA(double m_p0, double epsilon_dot, double t, double p[],int j, double delta_h, double Q, double T, double a[], double mt_cr){
+        //Dodanie stałych współczynników
+        a[7] = 0.452;
+        a[9] = 0.409;
+        a[10] = 0.0;
+        a[11] = 0.000042;
         double b = 0.25E-9;
         double D = 30;
         double Z = ZenerHollomon(epsilon_dot,Q,R,T);

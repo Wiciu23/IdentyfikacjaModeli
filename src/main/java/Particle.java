@@ -40,7 +40,8 @@ class Particle {
         } else if (function == FunctionType.FunctionB1) {
             return Function.functionB1(position.getCordinates());
         } else if (function == FunctionType.FunctionC) {
-            return Function.functionC(position.getCordinates());
+            ObjectProperties[] dataModel = ExcelReader.getObjectPropertiesExcel("C:\\Users\\java\\Particle_swarm\\IdentyfikacjaModeli\\Dane_lab5.xlsx");
+            return Function.functionC(position.getCordinates(),dataModel);
         } else
             return 0;
 
@@ -83,19 +84,19 @@ class Particle {
             a[1] = rand(3.0, 6.0);
             a[2] = rand(1E-4, 0.1);
         }else if (function == FunctionType.FunctionC){
-            a[0] = rand(0E-3, 10E-3);
-            a[1] = rand(10, 25000);
-            a[2] = rand(1E3, 100E3);
-            a[3] = rand(0,0.1);
-            a[4] = rand(10E3,500E3);
-            a[5] = rand(0.1,1);
-            a[6] = rand(1,10);
-            a[7] = rand(0,10);
-            a[8] = rand(0,10);
-            a[9] = rand(0,1);
-            a[10] = rand(0E13,1E13);
-            a[11] = rand(0E13,0.1E13 );
-            a[12] = rand(0, 1);
+            a[0] = rand(0.05, 0.15);
+            a[1] = rand(15000, 22000);
+            a[2] = rand(50, 100);
+            a[3] = rand(0.01,0.09);
+            a[4] = rand(100,150);
+            a[5] = rand(1.5,2.5);
+            a[6] = rand(0,0);
+            a[7] = rand(0.2,0.8);
+            a[8] = rand(0.05,0.25);
+            a[9] = rand(0.1,0.9);
+            a[10] = rand(0,0);
+            a[11] = rand(0.00001,0.00009);
+            a[12] = rand(0.01,0.09);
         }else{ for(int i = 0; i < a.length ; i++){
             a[i] = rand(0,100);
         }

@@ -132,7 +132,7 @@ public class Swarm {
         }
         return particles;
     }
-
+    //DODAĆ OBIEKT DANYCH BEZPOŚREDNIO DO ROJU.
     /**
      * Update the global best solution if a the specified particle has
      * a better solution
