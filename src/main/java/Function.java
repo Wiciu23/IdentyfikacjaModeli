@@ -182,11 +182,10 @@ class Function {
         ObjectProperties[] dataModel = dataTable;
         double totalError = 0;
         double Q = 312000;
-        double p_0 = 10000;
 
         for (ObjectProperties data:
                 dataModel) {
-            //Obiekty danych jest przechowywany w funkcji celu:
+            //Obiekty danych jest przechowywany w obiekcie roju:
             double[] obliczone = DifferentialEq.Euler(data.epsilon[100000],data.epsilon[1],a,data.dot_epsilon,data.temperature + 273,Q,data.epsilon[100001]);
             for (int i = 0 ; i < obliczone.length; i++){
                 totalError += Math.pow((data.sigma[i] - obliczone[i])/(data.sigma[i]+0.0001),2);

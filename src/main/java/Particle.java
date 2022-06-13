@@ -11,6 +11,8 @@ class Particle {
     private double bestEval;        // Personal best value.
     private FunctionType function;  // The evaluation function to use.
 
+    ObjectProperties[] dataTable = ExcelReader.getObjectPropertiesExcel("C:\\Users\\java\\Particle_swarm\\IdentyfikacjaModeli\\Dane_lab5.xlsx");
+
     /**
      * Construct a Particle with a random starting position.
      * @param beginRange    the minimum xyz values of the position (inclusive)
@@ -28,6 +30,11 @@ class Particle {
         bestEval = eval();
     }
 
+    Particle (FunctionType function, int beginRange, int endRange, int vectorLength, ObjectProperties[] dataTable) {
+        this(function,beginRange,endRange,vectorLength);
+        this.dataTable = dataTable;
+    }
+
     /**
      * The evaluation of the current position.
      * @return      the evaluation
@@ -40,8 +47,7 @@ class Particle {
         } else if (function == FunctionType.FunctionB1) {
             return Function.functionB1(position.getCordinates());
         } else if (function == FunctionType.FunctionC) {
-            ObjectProperties[] dataModel = ExcelReader.getObjectPropertiesExcel("C:\\Users\\java\\Particle_swarm\\IdentyfikacjaModeli\\Dane_lab5.xlsx");
-            return Function.functionC(position.getCordinates(),dataModel);
+            return Function.functionC(position.getCordinates(),dataTable);
         } else
             return 0;
 
@@ -84,18 +90,18 @@ class Particle {
             a[1] = rand(3.0, 6.0);
             a[2] = rand(1E-4, 0.1);
         }else if (function == FunctionType.FunctionC){
-            a[0] = rand(0.05, 0.15);
+            a[0] = rand(0.05*0.001, 0.15*0.001);
             a[1] = rand(15000, 22000);
-            a[2] = rand(50, 100);
-            a[3] = rand(0.01,0.09);
-            a[4] = rand(100,150);
+            a[2] = rand(50E3, 100E3);
+            a[3] = rand(3E10*0.01,3E10*0.09);
+            a[4] = rand(1E3*100,1E3*150);
             a[5] = rand(1.5,2.5);
             a[6] = rand(0,0);
             a[7] = rand(0.2,0.8);
             a[8] = rand(0.05,0.25);
             a[9] = rand(0.1,0.9);
             a[10] = rand(0,0);
-            a[11] = rand(0.00001,0.00009);
+            a[11] = rand(1E13*0.00001,1E13*0.00009);
             a[12] = rand(0.01,0.09);
         }else{ for(int i = 0; i < a.length ; i++){
             a[i] = rand(0,100);

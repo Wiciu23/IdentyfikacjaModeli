@@ -32,7 +32,8 @@ public class Main {
             social = getUserDouble("Social:    ");
             swarm = new Swarm(function, particles, epochs, inertia, cognitive, social);
         } else {
-            swarm = new Swarm(function, particles, epochs);
+            ObjectProperties[] dataModel = ExcelReader.getObjectPropertiesExcel("C:\\Users\\java\\Particle_swarm\\IdentyfikacjaModeli\\Dane_lab5.xlsx");
+            swarm = new Swarm(function, particles, epochs,dataModel);
 
         }
 

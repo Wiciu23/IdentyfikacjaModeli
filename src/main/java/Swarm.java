@@ -19,6 +19,8 @@ public class Swarm {
     public static final double DEFAULT_SOCIAL = 1.496180; // Social component. 1,496180
     int vectorLength;
 
+    ObjectProperties[] dataTable;
+
     /**
      * When Particles are created they are given a random position.
      * The random position is selected from a specified range.
@@ -36,6 +38,10 @@ public class Swarm {
      */
     public Swarm (Particle.FunctionType function, int particles, int epochs) {
         this(function, particles, epochs, DEFAULT_INERTIA, DEFAULT_COGNITIVE, DEFAULT_SOCIAL);
+    }
+
+    public Swarm (Particle.FunctionType function, int particles, int epochs, ObjectProperties[] dataTable) {
+        this(function, particles, epochs, DEFAULT_INERTIA, DEFAULT_COGNITIVE, DEFAULT_SOCIAL, dataTable);
     }
 
     /**
@@ -61,6 +67,22 @@ public class Swarm {
         vectorLength = Particle.getVectorLenght(function);
     }
 
+    public Swarm (Particle.FunctionType function, int particles, int epochs, double inertia, double cognitive, double social,ObjectProperties[] dataTable) {
+        this.numOfParticles = particles;
+        this.epochs = epochs;
+        this.inertia = inertia;
+        this.cognitiveComponent = cognitive;
+        this.socialComponent = social;
+        this.function = function;
+        double infinity = Double.POSITIVE_INFINITY;
+        bestPosition = new Vector(new double[]{infinity,infinity,infinity,infinity,infinity,infinity,infinity,infinity,infinity,infinity,infinity,infinity,infinity,infinity,infinity});
+        bestEval = Double.POSITIVE_INFINITY;
+        beginRange = DEFAULT_BEGIN_RANGE;
+        endRange = DEFAULT_END_RANGE;
+        vectorLength = Particle.getVectorLenght(function);
+        this.dataTable = dataTable;
+    }
+
     /**
      * Execute the algorithm.
      */
@@ -72,7 +94,7 @@ public class Swarm {
 
         double oldEval = bestEval;
         System.out.println("--------------------------EXECUTING-------------------------");
-        System.out.println("Global Best Evaluation (Epoch " + 0 + "):\t"  + bestEval);
+        System.out.println("Global Best Evaluation (Epoch " + 0 + "):\t"  + bestEval + "Vec " + bestPosition.toString());
 
         /*try{
             // Create file
@@ -126,7 +148,7 @@ public class Swarm {
     private Particle[] initialize () {
         Particle[] particles = new Particle[numOfParticles];
         for (int i = 0; i < numOfParticles; i++) {
-            Particle particle = new Particle(function, beginRange, endRange,vectorLength);
+            Particle particle = new Particle(function, beginRange, endRange,vectorLength,dataTable);
             particles[i] = particle;
             updateGlobalBest(particle);
         }

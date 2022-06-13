@@ -58,6 +58,7 @@ public class DifferentialEq {
     static double[] Euler(double czas_pomiaru, double delta_h, double[] a,double e_dot, double T, double Q,double t){
         int j = 0;
         double[] p = new double[100002];  // (int) (czas_pomiaru/delta_h)+2
+        p[0] = 10000;
         double t_cr = czas_pomiaru; //czas równy czasowi prowadzenia obliczeń.
         double ro_cr = -a[10]+a[11]*Math.pow(ZenerHollomon(e_dot,Q,T,R),a[9]);
         for (double i = 0; i < czas_pomiaru; i = i + delta_h) {
@@ -113,15 +114,16 @@ public class DifferentialEq {
         a[7] = 0.452;
         a[9] = 0.409;
         a[10] = 0.0;
-        a[11] = 0.000042;
+        a[11] = 0.000042E13;
+        a[4] = 123.12E3;
+        a[3] = 0.05317*3E10;
+        double p0 = m_p0;
         double b = 0.25E-9;
+        double Kirchoff = 43500;
         double D = 30;
         double Z = ZenerHollomon(epsilon_dot,Q,R,T);
         double l = (a[0])/(Math.pow(Z,a[12]));
-        double Kirchoff = 45000;
         double tau = (1E6*Kirchoff*Math.pow(b,2))/(2);
-
-        double p0 = m_p0;
         double A1 = 1/(b*l);
         double A2 = a[1]*Math.pow(epsilon_dot,-a[8])*Math.exp((-a[2])/(R*T));
         double A3 = a[3]*(tau/D)*Math.exp((-a[4])/(R*T));
