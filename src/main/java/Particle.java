@@ -11,7 +11,7 @@ class Particle {
     private double bestEval;        // Personal best value.
     private FunctionType function;  // The evaluation function to use.
 
-    ObjectProperties[] dataTable = ExcelReader.getObjectPropertiesExcel("C:\\Users\\java\\Particle_swarm\\IdentyfikacjaModeli\\Dane_lab5.xlsx");
+
 
     /**
      * Construct a Particle with a random starting position.
@@ -30,11 +30,6 @@ class Particle {
         bestEval = eval();
     }
 
-    Particle (FunctionType function, int beginRange, int endRange, int vectorLength, ObjectProperties[] dataTable) {
-        this(function,beginRange,endRange,vectorLength);
-        this.dataTable = dataTable;
-    }
-
     /**
      * The evaluation of the current position.
      * @return      the evaluation
@@ -47,7 +42,7 @@ class Particle {
         } else if (function == FunctionType.FunctionB1) {
             return Function.functionB1(position.getCordinates());
         } else if (function == FunctionType.FunctionC) {
-            return Function.functionC(position.getCordinates(),dataTable);
+            return Function.functionC(position.getCordinates());
         } else
             return 0;
 

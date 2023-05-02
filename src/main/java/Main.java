@@ -32,12 +32,16 @@ public class Main {
             social = getUserDouble("Social:    ");
             swarm = new Swarm(function, particles, epochs, inertia, cognitive, social);
         } else {
-            ObjectProperties[] dataModel = ExcelReader.getObjectPropertiesExcel("C:\\Users\\java\\Particle_swarm\\IdentyfikacjaModeli\\Dane_lab5.xlsx");
-            swarm = new Swarm(function, particles, epochs,dataModel);
+            swarm = new Swarm(function, particles, epochs);
 
         }
+        Publisher publisher = new Publisher();
+        Subscriber subscriber = new Subscriber();
 
+        subscriber.subscribe(publisher);
+        swarm.setPublisher(publisher);
         swarm.run();
+
     }
 
     private static Particle.FunctionType getFunction () {

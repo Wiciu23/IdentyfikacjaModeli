@@ -1,8 +1,8 @@
-import java.util.ArrayList;
 import org.apache.commons.math3.analysis.function.*;
 
 
 class Function {
+    private static ObjectProperties[] dataTable = ExcelReader.getObjectPropertiesExcel("Dane_lab5.xlsx");
 
     /**
      * Calculate the result of (x^4)-2(x^3).
@@ -178,7 +178,7 @@ class Function {
         return totalError;
     }
 
-    static double functionC(double a[], ObjectProperties[] dataTable){
+    static double functionC(double[] a){
         ObjectProperties[] dataModel = dataTable;
         double totalError = 0;
         double Q = 312000;

@@ -1,14 +1,18 @@
 import java.io.BufferedWriter;
 import java.io.FileWriter;
-import java.util.Random;
-
+import java.util.*;
 
 
 /**`
  * Represents a swarm of particles from the Particle Swarm Optimization algorithm.
  */
-public class Swarm {
+public class Swarm{
 
+    public void setPublisher(Publisher publisher) {
+        this.publisher = publisher;
+    }
+
+    private Publisher publisher;
     private int numOfParticles, epochs;
     private double inertia, cognitiveComponent, socialComponent;
     private Vector bestPosition;
@@ -40,9 +44,6 @@ public class Swarm {
         this(function, particles, epochs, DEFAULT_INERTIA, DEFAULT_COGNITIVE, DEFAULT_SOCIAL);
     }
 
-    public Swarm (Particle.FunctionType function, int particles, int epochs, ObjectProperties[] dataTable) {
-        this(function, particles, epochs, DEFAULT_INERTIA, DEFAULT_COGNITIVE, DEFAULT_SOCIAL, dataTable);
-    }
 
     /**
      * Construct the Swarm with custom values.
@@ -67,20 +68,12 @@ public class Swarm {
         vectorLength = Particle.getVectorLenght(function);
     }
 
-    public Swarm (Particle.FunctionType function, int particles, int epochs, double inertia, double cognitive, double social,ObjectProperties[] dataTable) {
-        this.numOfParticles = particles;
-        this.epochs = epochs;
-        this.inertia = inertia;
-        this.cognitiveComponent = cognitive;
-        this.socialComponent = social;
-        this.function = function;
-        double infinity = Double.POSITIVE_INFINITY;
-        bestPosition = new Vector(new double[]{infinity,infinity,infinity,infinity,infinity,infinity,infinity,infinity,infinity,infinity,infinity,infinity,infinity,infinity,infinity});
-        bestEval = Double.POSITIVE_INFINITY;
-        beginRange = DEFAULT_BEGIN_RANGE;
-        endRange = DEFAULT_END_RANGE;
-        vectorLength = Particle.getVectorLenght(function);
-        this.dataTable = dataTable;
+    public Vector getBestPosition() {
+        return bestPosition;
+    }
+
+    public Particle.FunctionType getFunction() {
+        return function;
     }
 
     /**
@@ -109,6 +102,7 @@ public class Swarm {
             if (bestEval < oldEval) {
                 System.out.print("Best" + (i + 1) + "):\t" + bestEval + "Vec: " + bestPosition.toString());
                 oldEval = bestEval;
+                publisher.publish(bestPosition.getCordinates());
                // out.write(String.valueOf(bestEval) + " \n");
             }
 
@@ -148,7 +142,7 @@ public class Swarm {
     private Particle[] initialize () {
         Particle[] particles = new Particle[numOfParticles];
         for (int i = 0; i < numOfParticles; i++) {
-            Particle particle = new Particle(function, beginRange, endRange,vectorLength,dataTable);
+            Particle particle = new Particle(function, beginRange, endRange,vectorLength);
             particles[i] = particle;
             updateGlobalBest(particle);
         }
