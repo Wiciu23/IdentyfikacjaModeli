@@ -3,7 +3,8 @@ public class DifferentialEq {
 
     public static void main(String args[]){
 
-
+        //Strategia raczej, umozliwia ona hermetyzacje całkowicie działana algorytmu.
+        
         if(false) {
             //Rozwiązywanie metodą Eulera pierwszego równania
             double a[] = {3.5, 5, 1};//{30, 20, 6, 0.5};// {12.5, 10, 9.5, 0.5};
