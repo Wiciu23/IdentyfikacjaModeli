@@ -4,7 +4,9 @@ import java.util.Random;
  * Represents a particle from the Particle Swarm Optimization algorithm.
  */
 class Particle {
-
+    //Dodawanie tutaj obserwatorów za pomoca metody fabrykującej ? -> każdy obserwator będzie modyfikował wykres (utworzyć coś z synchronisation ?
+    // by tylko jeden miał dostęp ?
+    
     private Vector position;        // Current position.
     private Vector velocity;
     private Vector bestPosition;    // Personal best solution.
@@ -34,6 +36,10 @@ class Particle {
      * The evaluation of the current position.
      * @return      the evaluation
      */
+    
+    
+    //Dramat, hermetyzacja tego, napisać może jakas metodę abstrakcyjną ? określic interfejs i na podstawie tego interfejsu tworzyć implementacje 
+    
     private double eval () {
         if (function == FunctionType.FunctionA) {
             return Function.functionA(position.getCordinates());
@@ -48,7 +54,7 @@ class Particle {
 
     }
 
-
+    // Wypierdolić to i np utworzyć tutaj gnerowanie randomów (UPEWNIĆ SIĘ CZY GENEROWANIE TEGO W SWARM nie przyniesie korzyści (parametry dodatkowe ))
      private void setRandomPosition (int vectorLength) {
         double a[] = new double[vectorLength];
 
