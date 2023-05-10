@@ -7,7 +7,13 @@ import java.util.*;
  * Represents a swarm of particles from the Particle Swarm Optimization algorithm.
  */
 public class Swarm{
-
+    
+    //add Observable interface related to each of dynamic parameters 
+    // - bestEval, bestPosition, currentPositions and currentEval (wtedy musiałoby być kilka ? i na żywo wyświetlane ? )
+    // zapytac chatgpt o pomysły na zwizualizowanie 12 wymiarowego vektora + plan plasy magisterskiej
+    // Przedstawić rezultat na "żywo" z historią jako 2d t-sne algorytmu 
+    // Napisanie statycznej metody fabrykującej dla Cząsteczki
+    
     public void setPublisher(Publisher publisher) {
         this.publisher = publisher;
     }
